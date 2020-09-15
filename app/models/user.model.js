@@ -13,7 +13,16 @@ const User = function (user) {
 
 User.getAll = (searchQuery, result) => {
 
-    let sqlQuery = `SELECT * FROM content  WHERE direction = '${searchQuery.direction}' and kpi= '${searchQuery.kpi}' and einstein_model like '%${searchQuery.einstein_model}%'`;
+    let conditionalQuery = `einstein_model like '%${searchQuery.einstein_model}%'`;
+    if (searchQuery.direction !== "") {
+        conditionalQuery += ` and direction = '${searchQuery.direction}'`
+    }
+
+    if (searchQuery.kpi !== "") {
+        conditionalQuery += ` and kpi = '${searchQuery.kpi}'`
+    }
+
+    let sqlQuery = `SELECT * FROM content  WHERE  ${conditionalQuery}`;
     sql.query(sqlQuery, (err, res) => {
         if (err) {
             console.log("error: ", err);
