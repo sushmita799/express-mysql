@@ -25,7 +25,7 @@ User.getAll = (searchQuery, result) => {
     let sqlQuery = `SELECT * FROM content  WHERE  ${conditionalQuery}`;
     sql.query(sqlQuery, (err, res) => {
         if (err) {
-            console.log("error: ", err);
+            console.log("----------error at sql execution --------: ", err);
             result(null, err);
             return;
         }
