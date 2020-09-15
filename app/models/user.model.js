@@ -1,4 +1,4 @@
-const sql = require("./db.js");
+const pool = require("./db.js");
 
 const User = function (user) {
     this.einstein_model = einstein_model;
@@ -23,7 +23,25 @@ User.getAll = (searchQuery, result) => {
     }
 
     let sqlQuery = `SELECT * FROM content  WHERE  ${conditionalQuery}`;
-    sql.query(sqlQuery, (err, res) => {
+
+
+    pool.getConnection(function(err, connection) {
+        // Use the connection
+        connection.query(sqlQuery, (err, res) => {
+            if (err) {
+                console.log("----------error at sql execution --------: ", err);
+                result(null, err);
+                connection.release();
+                return;
+            }
+    
+            // console.log("content: ", res);
+            result(null, res);
+            connection.release();
+        });   
+       });
+
+    /*sql.query(sqlQuery, (err, res) => {
         if (err) {
             console.log("----------error at sql execution --------: ", err);
             result(null, err);
@@ -32,7 +50,7 @@ User.getAll = (searchQuery, result) => {
 
         // console.log("content: ", res);
         result(null, res);
-    });
+    });*/
 };
 
 

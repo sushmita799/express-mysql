@@ -16,7 +16,7 @@ const dbConfig = require("../config/db.config.js");
 });*/
 
 //Attempt 2
-var connection;
+/*var connection;
 
 function handleDisconnect() {
   connection = mysql.createConnection({
@@ -44,23 +44,20 @@ function handleDisconnect() {
   });
 }
 
-handleDisconnect();
+handleDisconnect();*/
 
-/*
-let pool = mysql.createPool({
+//Attempt 3
+var pool = mysql.createPool({
     host: dbConfig.HOST,
     user: dbConfig.USER,
     password: dbConfig.PASSWORD,
     database: dbConfig.DB
 });
 
-pool.on('connection', function (_conn) {
-    if (_conn) {
-        logger.info('Connected the database via threadId %d!!', _conn.threadId);
-        _conn.query('SET SESSION auto_increment_increment=1');
-    }
-});*/
+pool.on('enqueue', function () {
+    console.log('Waiting for available connection slot');
+  });
 
 
-module.exports = connection;
+module.exports = pool;
 
