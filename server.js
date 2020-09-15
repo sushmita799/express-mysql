@@ -1,6 +1,8 @@
+require('dotenv').config();
 const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require('cors');
+var port = process.env.PORT || 3001;
 
 const app = express();
 
@@ -19,7 +21,7 @@ app.get("/", (req, res) => {
 require("./app/routes/user.routes.js")(app);
 
 // set port, listen for requests
-app.listen(3001, () => {
+app.listen(port, () => {
     console.log("Server is running on port 3001.");
 });
 
