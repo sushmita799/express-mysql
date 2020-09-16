@@ -51,7 +51,9 @@ var pool = mysql.createPool({
     host: dbConfig.HOST,
     user: dbConfig.USER,
     password: dbConfig.PASSWORD,
-    database: dbConfig.DB
+    database: dbConfig.DB,
+    connectionLimit : 5,
+    debug: false
 });
 
 pool.on('enqueue', function () {
