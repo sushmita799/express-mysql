@@ -22,7 +22,7 @@ User.getAll = (searchQuery, result) => {
         conditionalQuery += ` and kpi = '${searchQuery.kpi}'`
     }
 
-    let sqlQuery = `SELECT * FROM content  WHERE  ${conditionalQuery}`;
+    let sqlQuery = `SELECT DISTINCT solution FROM content  WHERE  ${conditionalQuery}`;
 
 
     pool.getConnection(function(err, connection) {
